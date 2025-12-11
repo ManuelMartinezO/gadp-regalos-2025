@@ -1,60 +1,139 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estadísticas de Juguetes</title>
     <link rel="stylesheet" href="/styles.css">
 </head>
+
 <body>
     <div class="container">
         <h1>Estadísticas de Entrega</h1>
-        
+
         <div class="stat-card">
-            <h3>Juguetes Total</h3>
-            <p class="stat-number"><%= estadisticas.niño + estadisticas.niña + estadisticas.bebe %></p>
+            <h3>Juguetes para Niños</h3>
+            <p class="stat-number">
+                <%= estadisticas.niño + estadisticas.niña + estadisticas.bebe %>
+            </p>
         </div>
 
         <div class="stats">
             <div class="stat-card">
                 <h3>Juguetes para Niños</h3>
-                <p class="stat-number"><%= estadisticas.niño %></p>
+                <p class="stat-number">
+                    <%= estadisticas.niño %>
+                </p>
             </div>
             <div class="stat-card">
                 <h3>Juguetes para Niñas</h3>
-                <p class="stat-number"><%= estadisticas.niña %></p>
+                <p class="stat-number">
+                    <%= estadisticas.niña %>
+                </p>
             </div>
             <div class="stat-card">
                 <h3>Juguetes para Bebés</h3>
-                <p class="stat-number"><%= estadisticas.bebe %></p>
+                <p class="stat-number">
+                    <%= estadisticas.bebe %>
+                </p>
             </div>
         </div>
 
-        <h2>Historial de Entregas</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Personal</th>
-                    <th>Descripción</th>
-                    <th>Cantidad</th>
-                    <th>Categoría</th>
-                    <th>Fecha</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% juguetes.forEach(j => { %>
-                <tr>
-                    <td><%= j.personal.nombre %> <%= j.personal.apellido %></td>
-                    <td><%= j.descripcion %></td>
-                    <td><%= j.cantidad %></td>
-                    <td><%= j.categoria %></td>
-                    <td><%= new Date(j.fecha_entrega).toLocaleDateString() %></td>
-                </tr>
-                <% }) %>
-            </tbody>
-        </table>
+        <form method="GET" action="/estadisticas" class="filter-form">
+            <label>Filtrar por fecha:</label>
+            <input type="date" name="fecha" value="<%= fechaSeleccionada %>">
+            <button type="submit">Filtrar</button>
+        </form>
+
 
         <a href="/" class="btn-link">Volver al Inicio</a>
     </div>
 </body>
+
+</html> -->
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas de Juguetes</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Estadísticas de Entrega</h1>
+
+    <form method="GET" action="/estadisticas">
+        <label>Filtrar por fecha:</label>
+        <input type="date" name="fecha" value="<%= fechaSeleccionada %>">
+        <button type="submit">Filtrar</button>
+    </form>
+
+    <!-- Totales generales -->
+    <h2>Total de Juguetes</h2>
+    <div class="stats">
+        <div class="stat-card">
+            <h3>Total General</h3>
+            <p class="stat-number">
+                <%= totalesGenerales.niño + totalesGenerales.niña + totalesGenerales.bebe %>
+            </p>
+        </div>
+        <div class="stat-card">
+            <h3>Niños</h3>
+            <p class="stat-number">
+                <%= totalesGenerales.niño %>
+            </p>
+        </div>
+        <div class="stat-card">
+            <h3>Niñas</h3>
+            <p class="stat-number">
+                <%= totalesGenerales.niña %>
+            </p>
+        </div>
+        <div class="stat-card">
+            <h3>Bebés</h3>
+            <p class="stat-number">
+                <%= totalesGenerales.bebe %>
+            </p>
+        </div>
+    </div>
+
+    <!-- Totales filtrados por fecha -->
+    <h2>Totales del día <%= fechaSeleccionada %>
+    </h2>
+    <div class="stats">
+        <div class="stat-card">
+            <h3>Total del día</h3>
+            <p class="stat-number">
+                <%= estadisticas.niño + estadisticas.niña + estadisticas.bebe %>
+            </p>
+        </div>
+        <div class="stat-card">
+            <h3>Niños</h3>
+            <p class="stat-number">
+                <%= estadisticas.niño %>
+            </p>
+        </div>
+        <div class="stat-card">
+            <h3>Niñas</h3>
+            <p class="stat-number">
+                <%= estadisticas.niña %>
+            </p>
+        </div>
+        <div class="stat-card">
+            <h3>Bebés</h3>
+            <p class="stat-number">
+                <%= estadisticas.bebe %>
+            </p>
+        </div>
+    </div>
+    </div>
+    
+
+</body>
+
 </html>
