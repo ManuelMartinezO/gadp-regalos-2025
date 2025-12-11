@@ -6,7 +6,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(180deg, #fd7e14 0%, #dc3545 100%);
     min-height: 100vh;
     padding: 20px;
 }
@@ -27,7 +27,7 @@ h1 {
 }
 
 h2 {
-    color: #667eea;
+    color: #dc3545;
     margin-bottom: 15px;
 }
 
@@ -58,7 +58,7 @@ textarea {
 
 button {
     padding: 12px;
-    background: #667eea;
+    background: #dc3545;
     color: white;
     border: none;
     border-radius: 5px;
@@ -68,7 +68,7 @@ button {
 }
 
 button:hover {
-    background: #5568d3;
+    background: #671019;
 }
 
 .stats {
@@ -79,7 +79,7 @@ button:hover {
 }
 
 .stat-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(180deg, #fd7e14 0%, #dc3545 100%);
     color: white;
     padding: 30px;
     border-radius: 10px;
@@ -117,12 +117,12 @@ tr:hover {
     display: inline-block;
     margin-top: 20px;
     padding: 10px 20px;
-    background: #764ba2;
+    background: #e84454;
     color: white;
     text-decoration: none;
     border-radius: 5px;
 }
 
 .btn-link:hover {
-    background: #5d3a7f;
+    background: #671019;
 }
