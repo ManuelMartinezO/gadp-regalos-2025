@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas de Juguetes</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Estadísticas de Entrega</h1>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Juguetes para Niños</h3>
+                <p class="stat-number"><%= estadisticas.niño %></p>
+            </div>
+            <div class="stat-card">
+                <h3>Juguetes para Niñas</h3>
+                <p class="stat-number"><%= estadisticas.niña %></p>
+            </div>
+            <div class="stat-card">
+                <h3>Juguetes para Bebés</h3>
+                <p class="stat-number"><%= estadisticas.bebe %></p>
+            </div>
+        </div>
+
+        <h2>Historial de Entregas</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Personal</th>
+                    <th>Descripción</th>
+                    <th>Cantidad</th>
+                    <th>Categoría</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% juguetes.forEach(j => { %>
+                <tr>
+                    <td><%= j.personal.nombre %> <%= j.personal.apellido %></td>
+                    <td><%= j.descripcion %></td>
+                    <td><%= j.cantidad %></td>
+                    <td><%= j.categoria %></td>
+                    <td><%= new Date(j.fecha_entrega).toLocaleDateString() %></td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+        <a href="/" class="btn-link">Volver al Inicio</a>
+    </div>
+</body>
+</html>

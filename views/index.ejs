@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Juguetes</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Sistema de Entrega de Juguetes</h1>
+        
+        <!-- Formulario de Personal -->
+        <div class="form-section">
+            <h2>Registrar Personal</h2>
+            <form action="/personal" method="POST">
+                <input type="text" name="nombre" placeholder="Nombre" required>
+                <input type="text" name="apellido" placeholder="Apellido" required>
+                <input type="text" name="cedula" placeholder="Cédula" required>
+                <input type="text" name="telefono" placeholder="Teléfono">
+                <button type="submit">Registrar Personal</button>
+            </form>
+        </div>
+
+        <!-- Formulario de Juguetes -->
+        <div class="form-section">
+            <h2>Registrar Entrega de Juguetes</h2>
+            <form action="/juguetes" method="POST">
+                <select name="personal" required>
+                    <option value="">Seleccionar Personal</option>
+                    <% personal.forEach(p => { %>
+                        <option value="<%= p._id %>"><%= p.nombre %> <%= p.apellido %></option>
+                    <% }) %>
+                </select>
+                
+                <textarea name="descripcion" placeholder="Descripción del juguete" required></textarea>
+                
+                <input type="number" name="cantidad" placeholder="Cantidad" min="1" required>
+                
+                <select name="categoria" required>
+                    <option value="">Categoría</option>
+                    <option value="niño">Niño</option>
+                    <option value="niña">Niña</option>
+                    <option value="bebe">Bebé</option>
+                </select>
+                
+                <button type="submit">Registrar Entrega</button>
+            </form>
+        </div>
+
+        <a href="/estadisticas" class="btn-link">Ver Estadísticas</a>
+    </div>
+</body>
+</html>
