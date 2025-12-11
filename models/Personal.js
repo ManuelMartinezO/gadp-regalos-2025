@@ -6,17 +6,6 @@ const personalSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  apellido: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  cedula: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  telefono: String,
   fecha_registro: {
     type: Date,
     default: Date.now
