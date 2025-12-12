@@ -37,6 +37,7 @@ h1 {
 h2 {
     color: #dc3545;
     margin-bottom: 15px;
+    margin-top: 30px;
 }
 
 .form-section {
@@ -65,18 +66,22 @@ textarea {
 }
 
 button {
-    padding: 12px;
-    background: #dc3545;
-    color: white;
     border: none;
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 25px;
+    background: linear-gradient(180deg, #fd7e14 0%, #dc3545 100%);
+    color: white;
+    text-decoration: none;
     border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
     font-weight: bold;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
 }
 
 button:hover {
-    background: #671019;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
 }
 
 .stats {
@@ -92,6 +97,7 @@ button:hover {
     padding: 30px;
     border-radius: 10px;
     text-align: center;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
 }
 
 .stat-number {
@@ -100,37 +106,120 @@ button:hover {
     margin-top: 10px;
 }
 
+/* Estilos para tablas de donantes */
+.donantes-lista {
+    margin: 20px 0 40px 0;
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    background: white;
 }
 
 th, td {
-    padding: 12px;
+    padding: 15px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
 th {
-    background: #667eea;
+    background: linear-gradient(180deg, #fd7e14 0%, #dc3545 100%);
     color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.5px;
 }
 
-tr:hover {
-    background: #f5f5f5;
+tbody tr {
+    transition: background 0.2s ease;
+}
+
+tbody tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+tbody tr:hover {
+    background: #ffe5e5;
+}
+
+/* Estilo especial para la primera posición */
+tbody tr:first-child {
+    background: #fff3e0;
+    font-weight: bold;
+}
+
+tbody tr:first-child:hover {
+    background: #ffe0b2;
+}
+
+/* Columna de posición */
+td:first-child {
+    font-weight: bold;
+    color: #dc3545;
+    text-align: center;
+    font-size: 18px;
+}
+
+/* Columna de cantidad */
+td:last-child {
+    font-weight: bold;
+    text-align: center;
+    color: #fd7e14;
+    font-size: 18px;
+}
+
+/* Mensaje cuando no hay datos */
+td[colspan] {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    padding: 30px;
 }
 
 .btn-link {
     display: inline-block;
     margin-top: 20px;
-    padding: 10px 20px;
-    background: #e84454;
+    padding: 12px 25px;
+    background: linear-gradient(180deg, #fd7e14 0%, #dc3545 100%);
     color: white;
     text-decoration: none;
     border-radius: 5px;
+    font-weight: bold;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
 }
 
 .btn-link:hover {
-    background: #671019;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    
+    .stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .stat-number {
+        font-size: 36px;
+    }
+    
+    th, td {
+        padding: 10px;
+        font-size: 13px;
+    }
+    
+    td:first-child,
+    td:last-child {
+        font-size: 16px;
+    }
 }

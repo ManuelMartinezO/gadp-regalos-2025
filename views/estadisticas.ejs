@@ -11,6 +11,7 @@
 <body>
     <div class="container">
         <h1>Estadísticas de Entrega</h1>
+        
         <!-- Totales generales -->
         <h2>Total de Juguetes</h2>
         <div class="stat-card">
@@ -39,14 +40,43 @@
                 </p>
             </div>
         </div>
+
+        <!-- NUEVO: Lista de donantes (general) -->
+        <h2>Donantes - Totales Generales</h2>
+        <div class="donantes-lista">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Posición</th>
+                        <th>Donante</th>
+                        <th>Total Juguetes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% donacionesPorDonante.forEach((donante, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= donante.nombre %></td>
+                            <td><%= donante.totalJuguetes %></td>
+                        </tr>
+                    <% }) %>
+                    <% if (donacionesPorDonante.length === 0) { %>
+                        <tr>
+                            <td colspan="3">No hay donaciones registradas</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+
         <form method="GET" action="/estadisticas">
             <label>Filtrar por fecha:</label>
-            <input type="date" name="fecha">
+            <input type="date" name="fecha" value="<%= fechaSeleccionada %>">
             <button type="submit">Filtrar</button>
         </form>
+        
         <!-- Totales filtrados por fecha -->
-        <h2>Totales del día <%= fechaSeleccionada %>
-        </h2>
+        <h2>Totales del día <%= fechaSeleccionada %></h2>
         <div class="stat-card">
             <h3>Total del día</h3>
             <p class="stat-number">
@@ -54,7 +84,6 @@
             </p>
         </div>
         <div class="stats">
-
             <div class="stat-card">
                 <h3>Niños</h3>
                 <p class="stat-number">
@@ -75,6 +104,34 @@
             </div>
         </div>
 
+        <!-- NUEVO: Lista de donantes del día -->
+        <h2>Donantes del día <%= fechaSeleccionada %></h2>
+        <div class="donantes-lista">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Posición</th>
+                        <th>Donante</th>
+                        <th>Total Juguetes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% donacionesPorDonanteFecha.forEach((donante, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= donante.nombre %></td>
+                            <td><%= donante.totalJuguetes %></td>
+                        </tr>
+                    <% }) %>
+                    <% if (donacionesPorDonanteFecha.length === 0) { %>
+                        <tr>
+                            <td colspan="3">No hay donaciones en esta fecha</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        
         <a href="/" class="btn-link">Volver al Inicio</a>
     </div>
 </body>

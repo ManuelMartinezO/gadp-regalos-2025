@@ -25,7 +25,7 @@ router.post('/personal', async (req, res) => {
   try {
     const nuevoPersonal = new Personal({
       ...req.body,
-      fecha_registro: obtenerFechaLocal() // Agregar fecha local si tu modelo lo tiene
+      fecha_registro: obtenerFechaLocal()
     });
     await nuevoPersonal.save();
     res.redirect('/');
@@ -88,10 +88,73 @@ router.get('/estadisticas', async (req, res) => {
       estadisticas[item._id] = item.total;
     });
 
+    // NUEVO: Obtener donaciones por donante (general)
+    const donacionesPorDonante = await Juguete.aggregate([
+      {
+        $group: {
+          _id: "$personal",
+          totalJuguetes: { $sum: "$cantidad" }
+        }
+      },
+      {
+        $lookup: {
+          from: "personals", // Nombre de la colección en MongoDB (plural)
+          localField: "_id",
+          foreignField: "_id",
+          as: "donante"
+        }
+      },
+      {
+        $unwind: "$donante"
+      },
+      {
+        $project: {
+          nombre: "$donante.nombre",
+          totalJuguetes: 1
+        }
+      },
+      {
+        $sort: { totalJuguetes: -1 } // Ordenar de mayor a menor
+      }
+    ]);
+
+    // NUEVO: Obtener donaciones por donante filtradas por fecha
+    const donacionesPorDonanteFecha = await Juguete.aggregate([
+      { $match: { fecha_entrega: { $gte: inicio, $lte: fin } } },
+      {
+        $group: {
+          _id: "$personal",
+          totalJuguetes: { $sum: "$cantidad" }
+        }
+      },
+      {
+        $lookup: {
+          from: "personals",
+          localField: "_id",
+          foreignField: "_id",
+          as: "donante"
+        }
+      },
+      {
+        $unwind: "$donante"
+      },
+      {
+        $project: {
+          nombre: "$donante.nombre",
+          totalJuguetes: 1
+        }
+      },
+      {
+        $sort: { totalJuguetes: -1 }
+      }
+    ]);
+
     res.render("estadisticas", {
       estadisticas,
       totalesGenerales,
-      fechaSeleccionada: fecha
+      fechaSeleccionada: fecha,
+      donacionesPorDonante,
+      donacionesPorDonanteFecha
     });
 
   } catch (error) {
