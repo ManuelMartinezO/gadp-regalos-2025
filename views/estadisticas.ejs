@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Estadísticas de Entrega</h1>
+        <h1>CONTEO DE JUGUETES</h1>
         
         <div class="stat-card">
             <h3>Juguetes Total</h3>
@@ -29,30 +29,6 @@
                 <p class="stat-number"><%= estadisticas.bebe %></p>
             </div>
         </div>
-
-        <h2>Historial de Entregas</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Personal</th>
-                    <th>Descripción</th>
-                    <th>Cantidad</th>
-                    <th>Categoría</th>
-                    <th>Fecha</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% juguetes.forEach(j => { %>
-                <tr>
-                    <td><%= j.personal.nombre %> <%= j.personal.apellido %></td>
-                    <td><%= j.descripcion %></td>
-                    <td><%= j.cantidad %></td>
-                    <td><%= j.categoria %></td>
-                    <td><%= new Date(j.fecha_entrega).toLocaleDateString() %></td>
-                </tr>
-                <% }) %>
-            </tbody>
-        </table>
 
         <a href="/" class="btn-link">Volver al Inicio</a>
     </div>

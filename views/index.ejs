@@ -11,17 +11,14 @@
 </header>
 <body>
     <div class="container">
-        <h1>Sistema de Entrega de Juguetes</h1>
+        <h1>CAMPAÑA NAVIDEÑA</h1>
         
         <!-- Formulario de Personal -->
         <div class="form-section">
-            <h2>Registrar Personal</h2>
+            <h2>Registrar Donante</h2>
             <form action="/personal" method="POST">
                 <input type="text" name="nombre" placeholder="Nombre" required>
-                <input type="text" name="apellido" placeholder="Apellido" required>
-                <input type="text" name="cedula" placeholder="Cédula" required>
-                <input type="text" name="telefono" placeholder="Teléfono">
-                <button type="submit">Registrar Personal</button>
+                <button type="submit">Registrar Donante</button>
             </form>
         </div>
 
@@ -30,11 +27,13 @@
             <h2>Registrar Entrega de Juguetes</h2>
             <form action="/juguetes" method="POST">
                 <select name="personal" required>
-                    <option value="">Seleccionar Personal</option>
+                    <option value="">Seleccionar Donante</option>
                     <% personal.forEach(p => { %>
-                        <option value="<%= p._id %>"><%= p.nombre %> <%= p.apellido %></option>
+                        <option value="<%= p._id %>"><%= p.nombre %></option>
                     <% }) %>
                 </select>
+
+                
                 
                 <textarea name="descripcion" placeholder="Descripción del juguete" required></textarea>
                 
@@ -53,5 +52,6 @@
 
         <a href="/estadisticas" class="btn-link">Ver Estadísticas</a>
     </div>
+
 </body>
 </html>
