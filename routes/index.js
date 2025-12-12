@@ -38,32 +38,56 @@ router.post('/juguetes', async (req, res) => {
 // Ver estadísticas
 router.get('/estadisticas', async (req, res) => {
   try {
-    const juguetes = await Juguete.find().populate('personal');
-    
-    // Calcular totales por categoría
-    const totales = await Juguete.aggregate([
+    let { fecha } = req.query;
+
+    // Si no hay fecha, usar hoy
+    if (!fecha) {
+      fecha = new Date().toISOString().split("T")[0];
+    }
+
+    // Rango de fecha filtrado
+    const inicio = new Date(fecha);
+    inicio.setUTCHours(0, 0, 0, 0);
+    const fin = new Date(fecha);
+    fin.setUTCHours(23, 59, 59, 999);
+
+    // Totales generales (sin filtrar por fecha)
+    const totalesGeneralesAggr = await Juguete.aggregate([
       {
         $group: {
-          _id: '$categoria',
-          total: { $sum: '$cantidad' }
+          _id: "$categoria",
+          total: { $sum: "$cantidad" }
         }
       }
     ]);
-    
-    const estadisticas = {
-      niño: 0,
-      niña: 0,
-      bebe: 0
-    };
-    
-    totales.forEach(item => {
+
+    const totalesGenerales = { niño: 0, niña: 0, bebe: 0 };
+    totalesGeneralesAggr.forEach(item => {
+      totalesGenerales[item._id] = item.total;
+    });
+
+    // Totales filtrados por fecha
+    const totalesFechaAggr = await Juguete.aggregate([
+      { $match: { fecha_entrega: { $gte: inicio, $lte: fin } } },
+      { $group: { _id: "$categoria", total: { $sum: "$cantidad" } } }
+    ]);
+
+    const estadisticas = { niño: 0, niña: 0, bebe: 0 };
+    totalesFechaAggr.forEach(item => {
       estadisticas[item._id] = item.total;
     });
-    
-    res.render('estadisticas', { juguetes, estadisticas });
+
+    res.render("estadisticas", {
+      estadisticas,
+      totalesGenerales,
+      fechaSeleccionada: fecha
+    });
+
   } catch (error) {
-    res.status(500).send('Error al cargar estadísticas');
+    console.error(error);
+    res.status(500).send("Error al cargar estadísticas");
   }
 });
+
 
 module.exports = router;
