@@ -4,6 +4,14 @@
     box-sizing: border-box;
 }
 
+.imagen {
+    width: 10rem;
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+    display: block;
+}
+
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(180deg, #fd7e14 0%, #dc3545 100%);
