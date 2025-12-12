@@ -3,6 +3,13 @@ const router = express.Router();
 const Personal = require('../models/Personal');
 const Juguete = require('../models/Juguete');
 
+// Función auxiliar para obtener fecha local
+function obtenerFechaLocal() {
+  const ahora = new Date();
+  const offsetMinutos = ahora.getTimezoneOffset();
+  return new Date(ahora.getTime() - (offsetMinutos * 60 * 1000));
+}
+
 // Página principal con formulario
 router.get('/', async (req, res) => {
   try {
@@ -16,7 +23,10 @@ router.get('/', async (req, res) => {
 // Registrar personal
 router.post('/personal', async (req, res) => {
   try {
-    const nuevoPersonal = new Personal(req.body);
+    const nuevoPersonal = new Personal({
+      ...req.body,
+      fecha_registro: obtenerFechaLocal() // Agregar fecha local si tu modelo lo tiene
+    });
     await nuevoPersonal.save();
     res.redirect('/');
   } catch (error) {
@@ -27,7 +37,10 @@ router.post('/personal', async (req, res) => {
 // Registrar entrega de juguetes
 router.post('/juguetes', async (req, res) => {
   try {
-    const nuevoJuguete = new Juguete(req.body);
+    const nuevoJuguete = new Juguete({
+      ...req.body,
+      fecha_entrega: obtenerFechaLocal()
+    });
     await nuevoJuguete.save();
     res.redirect('/estadisticas');
   } catch (error) {
@@ -40,16 +53,14 @@ router.get('/estadisticas', async (req, res) => {
   try {
     let { fecha } = req.query;
 
-    // Si no hay fecha, usar hoy
+    // Si no hay fecha, usar hoy en zona horaria local
     if (!fecha) {
-      fecha = new Date().toISOString().split("T")[0];
+      fecha = obtenerFechaLocal().toISOString().split("T")[0];
     }
 
-    // Rango de fecha filtrado
-    const inicio = new Date(fecha);
-    inicio.setUTCHours(0, 0, 0, 0);
-    const fin = new Date(fecha);
-    fin.setUTCHours(23, 59, 59, 999);
+    // Rango de fecha filtrado (ajustado a zona horaria local)
+    const inicio = new Date(fecha + "T00:00:00");
+    const fin = new Date(fecha + "T23:59:59.999");
 
     // Totales generales (sin filtrar por fecha)
     const totalesGeneralesAggr = await Juguete.aggregate([
